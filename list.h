@@ -34,6 +34,7 @@ record* searchNODE(record *node, const char *value){
         if(!strcmp(value,node->value)){
             return node;
         }
+        node = node->next;
     }
     return NULL;
 }
