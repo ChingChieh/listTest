@@ -17,25 +17,30 @@ void insert_sorted(record **r, const char *value)
     *r = newrec;                                                                                                                                             
 }
 
-void deleteNODE(record **node, const char *value){                                                                                
-    while((*node)->next){
-        if(!strcmp(value,(*node)->next->value)){
-            record *delete = (*node)->next;
-            (*node)->next = (*node)->next->next;
-            free(delete);
-            break;
-        }   
-        node = &((*node)->next);
-    }   
+void delete_sorted(record **node, const char *value)
+{                                                                                
+    record *curr, *prev;
+
+    for (curr = *node, prev = NULL;
+         curr != NULL && strcmp(value, curr->value);
+         prev = curr, curr = curr->next)
+        ;
+    if (curr == NULL)
+        return;
+    if (prev == NULL)
+        *node = (*node)->next;
+    else
+        prev->next = curr->next;
+    free(curr);
 }
 
-record* searchNODE(record *node, const char *value){
-    while(node){
-        if(!strcmp(value,node->value)){
+record *search_sorted(record *node, const char *value)
+{    
+    while (node) {
+        if (!strcmp(value, node->value)) {
             return node;
         }
         node = node->next;
     }
     return NULL;
 }
-
